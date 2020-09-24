@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>HTML Forms</title>
+		<link rel="stylesheet" href="../../base.css" />
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<a class="wes" href="https://wesbos.com">Wes Bos</a>
+			<form name="signup">
+				<label for="name">Name</label>
+				<input type="text" id="names" name="name" value="Wes Bos" />
+				<label for="email">Email</label>
+				<input type="email" id="mail" name="email" value="wesbos@gmail.com" />
+				<input type="checkbox" id="agree" name="agree" />
+				<label for="agree">I agree to the terms and conditions</label>
+				<hr />
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+
+		<div class="wrapper">
+			<form name="contact">
+				<label for="name"> Votre nom et prénom </label>
+				<input type="text" id="name" name="name" />
+				<label for="compagny"> Votre entreprise </label>
+				<input type="text" id="compagny" name="compagny" />
+				<label for="email"> Votre email</label>
+				<input type="email" id="email" name="email" />
+				<hr />
+				<button id="contactForm" type="submit">
+					Send
+				</button>
+			</form>
+		</div>
+
+		<script src="./forms.js"></script>
+	</body>
+</html>
