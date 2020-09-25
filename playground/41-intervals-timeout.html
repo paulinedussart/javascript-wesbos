@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intervals and Timers</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+  <body>
+    <h2>
+      Executer du code de manière asynchrone
+      <p>setTimeout(callback, delay)</p>
+    </h2>
+    <script>
+      // SYNCHRONE est du code qui s'exécute ligne après ligne en attendant la fin de l'exécution
+      // ASYNCHRONE est du code qui va s'exécuter ligne après ligne, mais la ligne suivante
+      // n'attendra pas que la ligne asynchrone ait fini son exécution.
+
+      // La méthode setTimeout(callback, delay), permet de définir un « minuteur » (timer)
+      //  qui exécute une fonction ou un code donné après la fin du délai indiqué.
+      const displayMyName = () => {
+        console.log('Hello Pauline');
+      };
+
+      const stopDisplayMyName = () => {
+        document.body.innerHTML = `<p>SOMEBODY CLICK JUST IN TIME</p>`;
+        console.log('Someone click the screen');
+      };
+      //const testTo = setTimeout(displayMyName, 2000);
+      //clearTimeout(testTo);
+
+      // setInterval: elle exécute la fonction passée en paramètre en boucle
+      // à une fréquence déterminée par le temps en millisecondes passé en second paramètre.
+
+      const testI = setInterval(displayMyName, 500);
+
+      const destroy = (e) => {
+        stopDisplayMyName();
+        clearInterval(testI);
+      };
+
+      window.addEventListener('click', destroy);
+    </script>
+  </body>
+</html>
