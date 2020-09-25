@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+
+  <body>
+    <input type="text" name="first" value="" placeholder="enter some text" />
+    <button type="submit">GO</button>
+    <script>
+      const me = {
+        firstname: 'Pauline',
+        lastname: 'Dussart',
+        'born-city': 'VA',
+      };
+      console.log(me);
+
+      // to make an unmutable new objet (cannot be reedit)
+      const freezeMe = Object.freeze(me);
+
+      // console.log(me['lastname']);
+      // console.log(me['lastname']);
+
+      //const value = prompt('What do you want to check ? ');
+      // should be write like this
+      //console.log(me[value]);
+      // This will check the key named 'value' which doesn't exist
+      //console.log(me.value);
+
+      const input = document.querySelector('input');
+      const button = document.querySelector('button');
+      const displayInfo = () => {
+        console.log(me[input.value]);
+      };
+      button.addEventListener('click', displayInfo);
+
+      const greetings = (gretting = 'Hey!') => {
+        console.log(`${greeting} ${this.firstname}`);
+      };
+      console.log(me.greetings());
+    </script>
+  </body>
+</html>
