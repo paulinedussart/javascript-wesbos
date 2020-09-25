@@ -1,17 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title></title>
-  <link rel="stylesheet" href="../base.css">
-</head>
+  <body>
+    <img width="200" src="./turtle.png" alt="Turt" class="turt" />
+    <style>
+      .turt {
+        position: relative;
+        --turtle-x: 0px;
+        --turtle-y: 0px;
+        --turtle-rotationX: 0deg;
+        --turtle-rotationY: 0deg;
+        transition-duration: 0.7s;
+        transition-timing-function: ease-in-out;
+        transform: translateX(var(--turtle-x)) translateY(var(--turtle-y))
+          rotateY(var(--turtle-rotationX)) rotate(var(--turtle-rotationY));
+      }
+    </style>
+    <script>
+      let x = 0;
+      let y = 0;
+      let rotate = 0;
+      let flipped = false;
+      const speedX = 100;
+      const speedY = 80;
+      const turtle = document.querySelector('.turt');
+      turtle.setAttribute('style', `--turtle-x: ${x}px; --turtle-y: ${y}px;`);
+      const handleKeyDown = (event) => {
+        if (!event.key.includes('Arrow')) {
+          return;
+        }
+        switch (event.key) {
+          case 'ArrowUp':
+            y -= 1;
+            rotate = -90;
+            break;
+          case 'ArrowDown':
+            y += 1;
+            rotate = 90;
+            break;
+          case 'ArrowLeft':
+            x -= 1;
+            rotate = 0;
+            flipped = true;
+            break;
+          case 'ArrowRight':
+            x += 1;
+            rotate = 0;
+            flipped = false;
+            break;
+          default:
+            console.log('Sorry, this is not a default value');
+            break;
+        }
+        console.log(x, y);
+        turtle.setAttribute(
+          'style',
+          `--turtle-x: ${x * speedX}px;
+      	   --turtle-y: ${y * speedY}px;
+      		 --turtle-rotationX: ${flipped ? '180deg' : '0deg'};
+      		 --turtle-rotationY: ${rotate}deg;
+      `
+        );
+      };
 
-
-<body>
-  <img width="200" src="./turtle.png" alt="Turt" class="turt">
-
-</body>
-
+      window.addEventListener('keydown', handleKeyDown);
+    </script>
+  </body>
 </html>
