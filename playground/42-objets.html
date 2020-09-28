@@ -8,39 +8,78 @@
   </head>
 
   <body>
+    <script src="https://unpkg.com/lodash"></script>
     <input type="text" name="first" value="" placeholder="enter some text" />
     <button type="submit">GO</button>
     <script>
-      const me = {
+      const person = {
         firstname: 'Pauline',
         lastname: 'Dussart',
         'born-city': 'VA',
+        sayHello: (greetings = 'heyyy') => {
+          console.log(this);
+          return `${greetings} ${person.firstname}`;
+        },
       };
-      console.log(me);
+      console.log(person);
 
       // to make an unmutable new objet (cannot be reedit)
-      const freezeMe = Object.freeze(me);
+      const freezeMe = Object.freeze(person);
 
-      // console.log(me['lastname']);
-      // console.log(me['lastname']);
+      // console.log(person['lastname']);
+      // console.log(person['lastname']);
 
       //const value = prompt('What do you want to check ? ');
       // should be write like this
-      //console.log(me[value]);
+      //console.log(person[value]);
       // This will check the key named 'value' which doesn't exist
-      //console.log(me.value);
+      //console.log(person.value);
 
       const input = document.querySelector('input');
       const button = document.querySelector('button');
       const displayInfo = () => {
-        console.log(me[input.value]);
+        console.log(person[input.value]);
       };
       button.addEventListener('click', displayInfo);
 
-      const greetings = (gretting = 'Hey!') => {
-        console.log(`${greeting} ${this.firstname}`);
+      //PART 2
+      obj1 = {
+        age: 13,
+        city: 'Vicq',
+        clothings: {
+          books: 4,
+          socks: 5,
+        },
       };
-      console.log(me.greetings());
+
+      obj2 = obj1;
+      obj2 === obj1;
+      // --> Will be false
+      //same object will always be differents
+
+      obj2.age = 14;
+      // if I change the key of obj2, obj1 will be affected because obj2 it's pointing the obj1
+      // it's not a copy
+
+      //If you want to copy : (spread)
+      const obj3 = { ...obj1 };
+      // Now if I change a key in obj3, obj1 will no be afected
+      obj3.age = 15;
+      // An another way to copy an object
+      obj4 = Object.assign({}, obj3);
+      // They did a shallow copy, on just one level deep.
+      // All other level will be pointing to the element copied (an obj into an obj)
+
+      // IF I WANT A DEEP COPY
+      // Use the lodash library
+
+      const deep = _.cloneDeep(obj1);
+      deep.clothings.books = 14;
+      // Now I able to change the value of the deep object independently
+      // => false
+
+      // Add 2 object
+      result = { ...firstObject, ...lastObject };
     </script>
   </body>
 </html>
