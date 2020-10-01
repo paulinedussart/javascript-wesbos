@@ -3,7 +3,7 @@
 const shoppingForm = document.querySelector(".shopping");
 const item = document.getElementById("item");
 const ul = document.querySelector(".list");
-const items = [];
+let items = [];
 
 // we need a array to hold our state (bunch of data that reflect the current state of my app)
 const getItem	= (event) => {
@@ -28,7 +28,6 @@ const getItem	= (event) => {
 };
 
 const displayItems = (e) => {
-	console.log(e);
 	// iterating over the array to get the names with <li> attributes
   const html = items.map(item => `<li class="shopping-item">
 	<input value="${item.id}" type="checkbox" checked${item.statut ? checked : null }>
@@ -38,8 +37,27 @@ const displayItems = (e) => {
 	ul.innerHTML = html
 };
 
+const mirrorToLocalStorage = (e) => {
+	console.info("Items save to local storage");
+	console.log(items);
+	localStorage.setItem("items", JSON.stringify(items));
+}
 
+const restorToLocalStorage = () => {
+	console.log("Restore from local storage");
+	const retrievedObject = localStorage.getItem("items");
+	const stored = JSON.parse(retrievedObject);
+
+	if (stored.length) {
+		console.log("geed");
+		items = stored
+		displayItems()
+	}
+}
+ 
 shoppingForm.addEventListener("submit", getItem)
 ul.addEventListener("itemsUpdated", displayItems)
+ul.addEventListener("itemsUpdated", mirrorToLocalStorage)
 
-// LOCAL STORAGE IS A MINI DATABASE IN MY BROWSER
+// LOCAL STORAGE IS A MINI DATABASE IN THE USER BROWSER
+restorToLocalStorage()
