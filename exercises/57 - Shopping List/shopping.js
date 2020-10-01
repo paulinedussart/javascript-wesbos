@@ -30,7 +30,7 @@ const getItem	= (event) => {
 const displayItems = (e) => {
 	// iterating over the array to get the names with <li> attributes
   const html = items.map(item => `<li class="shopping-item">
-	<input value="${item.id}" type="checkbox" checked${item.statut ? checked : null }>
+	<input value="${item.id}" type="checkbox" ${item.statut ? "checked" : null }>
 	<span class="itemName">${item.name}</span>
 	<button id="${item.id}">x</i></button>
 	</li>`).join("")
@@ -73,10 +73,24 @@ const deleteItem = (id) => {
 	ul.dispatchEvent(new CustomEvent('itemsUpdated'))
 }
 
+// UPDATE STATUS 
+const markAsChecked = (id) => {
+	const updatedItem = items.find( item => item.id === id)
+	updatedItem.statut = !updatedItem.statut
+	// this will trigger the line 61 and 62
+	ul.dispatchEvent(new CustomEvent('itemsUpdated'))
+};
+
+
 // Event delegation (we delegate the delete action when it's a button which is clicked)
 ul.addEventListener("click", (event) => {
 	if(event.target.matches("button")){
 		deleteItem(parseInt(event.target.id));
-	}
+	} else if (event.target.matches("input[type='checkbox']")) {
+		// console.log(event.target.checked);
+		// event.target.checked.checked = !event.target.checked.checked
 
+		markAsChecked(parseInt(event.target.value))
+
+	}
 } )
