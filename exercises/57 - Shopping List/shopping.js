@@ -32,7 +32,7 @@ const displayItems = (e) => {
   const html = items.map(item => `<li class="shopping-item">
 	<input value="${item.id}" type="checkbox" checked${item.statut ? checked : null }>
 	<span class="itemName">${item.name}</span>
-	<button><i class="fas fa-trash"></i></button>
+	<button id="${item.id}">x</i></button>
 	</li>`).join("")
 	ul.innerHTML = html
 };
@@ -46,12 +46,14 @@ const mirrorToLocalStorage = (e) => {
 const restorToLocalStorage = () => {
 	console.log("Restore from local storage");
 	const retrievedObject = localStorage.getItem("items");
-	const stored = JSON.parse(retrievedObject);
+	const storedItems = JSON.parse(retrievedObject);
 
-	if (stored.length) {
-		console.log("geed");
-		items = stored
-		displayItems()
+	if (storedItems.length) {
+		// spreading storedItems in items
+		items.push(...storedItems) 
+		// displayItems()
+		// work also
+		ul.dispatchEvent(new CustomEvent('itemsUpdated'))
 	}
 }
  
@@ -61,3 +63,20 @@ ul.addEventListener("itemsUpdated", mirrorToLocalStorage)
 
 // LOCAL STORAGE IS A MINI DATABASE IN THE USER BROWSER
 restorToLocalStorage()
+
+
+// DELETING ELEMENT 
+const deleteItem = (id) => {
+	console.log("Deleting ...", id);
+	items = items.filter(item => item.id !== id)
+	// this will trigger the line 61 and 62
+	ul.dispatchEvent(new CustomEvent('itemsUpdated'))
+}
+
+// Event delegation (we delegate the delete action when it's a button which is clicked)
+ul.addEventListener("click", (event) => {
+	if(event.target.matches("button")){
+		deleteItem(parseInt(event.target.id));
+	}
+
+} )
