@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New & this</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+  <body>
+    <script>
+      //NEW keyword
+      // When we said in JS everyting is an object is because everything can support a method
+      const myArray = new Array(34, 54);
+      console.log(myArray);
+      // WARNING : Arrow function are not constructor !
+      // const Pizza = () => {
+      //   console.log(`This is my pizza `);
+      // };
+      // normal function YES
+      function Pizza(word) {
+        console.log(`My pizza flavour is : ${word} `);
+      }
+
+      const cheese = new Pizza('cheese');
+      console.log(cheese);
+    </script>
+  </body>
+</html>
