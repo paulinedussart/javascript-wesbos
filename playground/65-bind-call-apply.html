@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bind, Call and Apply</title>
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+  <body>
+    <script>
+      // 3 functions use to change the scope of what this is equal to inside of a function or method
+      // BIND
+      const person = {
+        firstName: 'Jimmy',
+        sayHi() {
+          // the element on which sayHi is called (the obj person)
+          console.log(this);
+          console.log(`Hello ${this.firstName}`);
+          return `Hello ${this.firstName}`;
+        },
+      };
+
+      let sayHi = person.sayHi;
+      // the this keyword, return the window at line 17 in this case
+      console.log(sayHi);
+
+      // we will use the .bind() to change what this is equal/lié to (where this keyword is defined)
+      sayHi = person.sayHi.bind(person);
+      // "hello Jimmy"
+      const pauline = { firstName: 'Pauline' };
+
+      sayHi = person.sayHi.bind(pauline);
+      console.log(sayHi);
+      // "hello Pauline"
+
+      // .querySelector() Exemple :
+      // by calling bind against querySelector, we say when the $ function is run, use `document` as the `this` value.
+      // const $ = document.querySelector.bind(document);
+      // console.dir($);
+      // const lookFor = document.querySelectorAll.bind(document);
+
+      // const wrapper = document.querySelector('.wrapper');
+      // const p = wrapper.querySelector('p');
+      // console.log(p);
+      // console.log($('p'));
+      // console.log(lookFor('p'));
+
+      // Math Exemple
+      const bill = {
+        total: 1000,
+        taxIncome(taxRate) {
+          console.log(this);
+          return this.total + this.total * taxRate;
+        },
+      };
+
+      console.log(bill.taxIncome(0.16));
+      // here, this = {total: 1000, taxIncome: ƒ}
+      // 1160
+
+      const another = bill.taxIncome(0.2);
+      console.log(another);
+      // 1200
+      const another2 = bill.taxIncome;
+      // error NaN because this rpz the Window
+      const another2 = bill.taxIncome.bind(bill);
+      const another3 = bill.taxIncome.bind({ total: 500 });
+      console.log(another2(0.3));
+      console.log(another3(0.4));
+      // .bind accept multi argument,
+      // 1st : the this reference
+      // 2nd : the argument to the function
+    </script>
+  </body>
+</html>
