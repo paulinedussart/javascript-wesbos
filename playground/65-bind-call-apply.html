@@ -63,13 +63,47 @@
       // 1200
       const another2 = bill.taxIncome;
       // error NaN because this rpz the Window
-      const another2 = bill.taxIncome.bind(bill);
+      const another4 = bill.taxIncome.bind(bill);
       const another3 = bill.taxIncome.bind({ total: 500 });
-      console.log(another2(0.3));
+      console.log(another4(0.3));
       console.log(another3(0.4));
       // .bind accept multi argument,
       // 1st : the this reference
       // 2nd : the argument to the function
+
+      // CALL
+      //is the same as .bind but run the function whitout calling it a
+      const another5 = bill.taxIncome.bind(bill);
+      console.log(another2());
+      const another6 = bill.taxIncome.bind(bill);
+      console.log(another2);
+
+      function Product(name, price) {
+        console.log(this);
+        this.name = name;
+        this.price = price;
+      }
+
+      function Food(name, price) {
+        console.log(this);
+        Product.call(this, name, price);
+        this.category = 'food';
+      }
+
+      function Toy(name, price) {
+        console.log(this);
+        Product.call(this, name, price);
+        this.category = 'toy';
+      }
+      console.log('_____');
+      var cheese = new Food('feta', 5);
+      console.log(cheese);
+      console.log('_____');
+      var fun = new Toy('robot', 40);
+      console.log(fun);
+      console.log('_____');
+
+      // APPLY()
     </script>
   </body>
 </html>
