@@ -8,28 +8,51 @@
   </head>
   <body>
     <script>
-      //NEW keyword
-      // When we said in JS everyting is an object is because everything can support a method
-      const myArray = new Array(34, 54);
-      console.log(myArray);
-      // WARNING : Arrow function are not constructor !
-      // const Pizza = () => {
-      //   console.log(`This is my pizza `);
-      // };
-      // normal function YES
-      function Pizza(word) {
-        console.log(`My pizza flavour is : ${word} `);
-      }
+         //NEW keyword
+         // When we said in JS everyting is an object is because everything can support a method
+         const myArray = new Array(34, 54);
+         console.log(myArray);
+         // WARNING : Arrow function are not constructor !
+         // const Pizza = () => {
+         //   console.log(`This is my pizza `);
+         // };
+         // normal function YES
+         function Pizza(word) {
+           console.log(`My pizza flavour is : ${word} `);
+         }
 
-      const cheese = new Pizza('cheese');
-      console.log(cheese);
+         const cheese = new Pizza('cheese');
+         console.log(cheese);
 
-      //THIS KeyWord
+         //THIS KeyWord
 
-      // With normals functions, this refer to event.currentTarget
-      // But with arrows functions it refer to he Window (higher target)
+         // With normals functions, this refer to event.currentTarget
+         // But with arrows functions it refer to he Window (higher target)
 
-      // this allow to store data inside a function
+         // this allow to store data inside a function
+
+         function surfing(weather, size, level) {
+           console.log('what this is : ', this);
+           this.weather = weather;
+           this.size = size;
+           this.level = level;
+         }
+
+         const pauline = new surfing('sunny', 34, 'good');
+         console.log('my instance of the surfing function : ', pauline);
+
+         // PROTOTYPES
+         // some methods you write inside a function are not the same
+         // the .length method you write after an array are the same
+         // array1.lenght === array2.lenght --> true
+
+         // Function.propotype.method allow to create a method that the instance will be able to use
+         // it is not present into this function but allow all the instance to use the same method
+         // the code first look into the function and if it is not present go to the prototype. a
+         surfing.prototype.place = 'Tahiti';
+      console.log(pauline.place); --> "Tahiti"
+
+      // with .prototype I can add any methode (as function form) as I want
     </script>
   </body>
 </html>
