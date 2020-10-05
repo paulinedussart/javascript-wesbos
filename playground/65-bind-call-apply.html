@@ -73,6 +73,7 @@
 
       // CALL
       //is the same as .bind but run the function whitout calling it a
+      // call it immediatly
       const another5 = bill.taxIncome.bind(bill);
       console.log(another2());
       const another6 = bill.taxIncome.bind(bill);
@@ -95,15 +96,22 @@
         Product.call(this, name, price);
         this.category = 'toy';
       }
-      console.log('_____');
-      var cheese = new Food('feta', 5);
+
+      const cheese = new Food('feta', 5);
       console.log(cheese);
       console.log('_____');
-      var fun = new Toy('robot', 40);
+
+      const fun = new Toy('robot', 40);
       console.log(fun);
       console.log('_____');
 
       // APPLY()
+      //La méthode apply() appelle une fonction en lui passant une valeur this
+      // et des arguments sous forme d'un tableau unique  (ou d'un objet semblable à un tableau).
+      const numbers = [5, 6, 2, 3, 7];
+
+      const max = Math.max.apply(null, numbers);
+      const max = Math.min.apply(null, [5, 6, 2, 3, 7]);
     </script>
   </body>
 </html>
