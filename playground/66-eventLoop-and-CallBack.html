@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bind, Call and Apply</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+	<body style="display: flex; justify-content: center;">
+		<style>
+			#button {transition: all 0.2s;}
+		</style>
+
+		<div id="button" style="background-color: yellowgreen;" class="p-2">Click !</div>
+		
+		<script>
+			const btn = document.querySelector("#button");
+			
+			// CALLBACK
+			// 1. Text should be GO when clicked
+			btn.addEventListener("click", function(e){
+				console.log(e.currentTarget.innerText = "GO");
+
+				// 2. Make it a circle after 2s
+				setTimeout(() => {
+					console.log("circle");
+					btn.style.borderRadius = "50%";
+					// 3. Make it red after 0.5s
+					setTimeout(() => {
+						console.log("red");
+						btn.style.backgroundColor = "red";
+						btn.style.color = "white";
+						// 4. Make it square after 0.25s
+						setTimeout(() => {
+							console.log("square");
+							btn.style.borderRadius = "0%";
+							// 5. Make it purple after 0.3s
+							setTimeout(()=> {
+								console.log("purple");
+								btn.style.backgroundColor = "#5f81ff";
+								btn.style.color = "white";
+								// 6. Fade out after 0.5s
+								setTimeout(() => {
+					        btn.style.opacity = 0;
+								}, 300)
+							}, 300)
+						}, 250)
+					}, 500)
+				}, 300)
+			})
+			// 7. Finish ! 
+
+			// JS   (async and no blockling ) single-thread --> only one thing can be run at one time 
+			// Here, I need to do one thing after another I need to nest the 
+			// callback inside of each other because they all depend on the previous callback to being called
+			// becore it can be run. a
+			
+			
+			// But this is a mess and something exist to not write thing like thing ==> Promise
+    </script>
+  </body>
+</html>
