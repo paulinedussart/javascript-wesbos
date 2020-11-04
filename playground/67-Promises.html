@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Promises</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+	<body style="display: flex; justify-content: center;">
+		<script>
+			// When we request for something that will hapend in the futur we get a promess to get data back
+			// (timer, data to be requested, an access to microphone )
+
+			// Used to perform treatments asynchronously
+
+			// A promise rpz a value that may be available now or in the futur or even never
+			// The value is not know at the moment of the creation
+
+			// const promise = new Promise(/* exécuteur */);
+			
+			const promise1 = new Promise((resolve, reject) => {
+			  setTimeout(() => {
+			    resolve('foo');
+			  }, 300);
+			});
+
+			// callback
+			promise1.then((value) => {
+			  console.log("The value :", value);
+			  // expected output: "foo"
+			});
+
+			console.log(promise1);
+			// expected output: [object Promise]
+			
+			// 1. On execute le code asynch à l'interieur du constructeur
+			// 2. Si tout s'est bien passé on appelle la fonction resolve(valeur) pour définir l'état de la promesse
+						// renvoie un obj Promise avec la valeur donnée
+			// 2. s'il y a eu un problème on appelle la fonction reject(raison), la promesse est rompue 
+						// renvoie un obj Promise avec la raison donnée
+			// 3. Le constructeur new Promise renvoie l'obj crée avec son statut
+			// 4. on execute le code .then() si resolution de la promesse
+						// cela renverra une nouvelle P résolu avec la value de retour de la fonction utilisée 
+						// ex ligne.27 avec value
+			// 4. on execute le code .catch() si reject
+						// fonction callback
+
+			// Une composition c'est quand les méhodes .then() et .catch() peuvent être chainées. 
+
+			function makePizza (topping) {
+				// Promises are made imediatly but do not resolve until they are ready !!!
+				return new Promise((resolve, reject) => {
+					const timeToCook = 5 * (topping.length * 100)
+					setTimeout(()=> {
+					// resolving when it's done
+					resolve(`your 🍕 is ${topping.join(" ")}`)
+					}, timeToCook)
+					// reject if something wrong
+					// reject("❌")
+				});
+			}
+
+			const pizza = makePizza(["onion", "creame", "mushroom", "pear"]);
+			console.log(pizza);
+			//Promise {<fulfilled>: "🍕 + onion, mushroom, tomate"}
+			console.log("first");
+
+			// ** THIS IS DONE SEQUENTIALY **
+			pizza.then(pizza1 => {
+				console.log("third");
+				console.log(pizza1);
+				// your 🍕 is onion, mushroom, tomate
+				return makePizza(["feta", "ananas"])
+			})
+			.then(pizza2 => {
+				console.log(pizza2)
+				// your 🍕 is feta ananas
+				return makePizza(["honey"])
+			})
+			.then(pizza3 => {
+				console.log(pizza3);
+				// your 🍕 is honey noix
+			})
+			console.log("second");
+
+			// ** THIS IS DONE CONCURRENTLY **
+			// display all the promises when they are all done ! 
+			const pizza1 = makePizza(["aaa", "bbb", "ccc"])
+			const pizza2 = makePizza(["zzz", "yyy", "zzz"])
+			const pizza3 = makePizza(["mmm", "nnn", "ooo"])
+
+			const allPromises = Promise.all([pizza1, pizza2, pizza3])
+			console.log(allPromises);
+			allPromises.then(pizzas => {
+				console.log([first, second, third] = pizzas);
+			})
+
+    </script>
+  </body>
+</html>
