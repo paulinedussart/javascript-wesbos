@@ -57,6 +57,9 @@
 					resolve(`your 🍕 is ${topping.join(" ")}`)
 					}, timeToCook)
 					// reject if something wrong
+					if (topping.includes("pineapple")){
+						reject(new Error("PineApple present : Must NOT be include"))
+					}
 					// reject("❌")
 				});
 			}
@@ -82,19 +85,50 @@
 				console.log(pizza3);
 				// your 🍕 is honey noix
 			})
+			// manage error 
+			.catch(error => {
+				console.error(error);
+			});
 			console.log("second");
 
 			// ** THIS IS DONE CONCURRENTLY **
 			// display all the promises when they are all done ! 
-			const pizza1 = makePizza(["aaa", "bbb", "ccc"])
-			const pizza2 = makePizza(["zzz", "yyy", "zzz"])
-			const pizza3 = makePizza(["mmm", "nnn", "ooo"])
+				// const pizza1 = makePizza(["aaa", "bbb", "ccc"])
+				// const pizza2 = makePizza(["zzz", "yyy", "zzz"])
+				// const pizza3 = makePizza(["mmm", "nnn", "ooo"])
 
-			const allPromises = Promise.all([pizza1, pizza2, pizza3])
-			console.log(allPromises);
-			allPromises.then(pizzas => {
-				console.log([first, second, third] = pizzas);
-			})
+				// const allPromises = Promise.all([pizza1, pizza2, pizza3])
+				// console.log(allPromises);
+
+				// allPromises.then(pizzas => {
+				// 	console.log([first, second, third] = pizzas);
+				// })
+
+			const handleError = (err) => {
+				console.error(err);
+			}		
+			 makePizza(["cactus"])
+			 .then(pizza => {
+				 console.log(pizza);
+			 })
+			//  .catch(error => {
+			// 	 console.log(error);
+			//  }
+			.catch(handleError)
+			// We notice that when we trow an error the code stop immediatly
+			
+				const pizza4 = makePizza(["aaa"])
+				const pizza5 = makePizza(["zzz", "yyy", "pineapple"])
+				const pizza6 = makePizza(["mmm", "nnn", "ooo"])
+				
+				const promises = [pizza4, pizza5, pizza6];
+
+				Promise.allSettled(promises).then(result => {
+					console.log(result);
+				})
+
+
+
 
     </script>
   </body>
