@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Refacto</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="../base.css" />
+  </head>
+	<body style="display: flex; justify-content: center;">
+		<style>
+			#button {transition: all 0.2s;}
+		</style>
+
+		<div id="button" style="background-color: yellowgreen;" class="p-2 btn">Click !</div>
+		
+		<script>
+			// REFACTO 66
+			const btn = document.querySelector("#button");
+			
+			// wait a certain amout of time 
+			const wait = (ms = 0) => new Promise( resolve => setTimeout(resolve, ms));
+
+			const animation = (event) => {
+		 		event.currentTarget.innerText = "GO"
+				 
+			 // 2. Make it a circle after 2s
+				wait(200)
+					.then(() => {
+						console.log("circle");
+						btn.style.borderRadius = "50%";
+						return wait(500)
+					})
+					// 3. Make it red after 0.5s
+					.then(() =>{
+						console.log("red");
+						btn.style.backgroundColor = "red";
+						btn.style.color = "white";
+						return wait(250)
+					})
+					// 4. Make it square after 0.25s
+					.then(() =>{
+						console.log("square");
+						btn.style.borderRadius = "0%";
+						return wait(300)
+					})
+					// 5. Make it purple after 0.3s
+					.then(() =>{
+						console.log("purple");
+						btn.style.backgroundColor = "#5f81ff";
+						btn.style.color = "white";
+						return wait(500)
+					})
+					// 6. Fade out after 0.5s
+					.then(() =>{
+						console.log("disapear");
+						btn.style.opacity = 0;
+					})
+			}
+			btn.addEventListener("click",animation );
+    </script>
+  </body>
+</html>
