@@ -12,21 +12,22 @@
 		
 	<script>
 		console.log("Async Await");
+
+		// EXERCICE 1
 		const wait = (time = 0) => new Promise(resolve => setTimeout(resolve, time))
 
-		// mark the function as async
+		// 1.mark the function as async
 		const test = async () => {
 			console.log("start");
-			// the AWAIT keyword allow to wait the Promise to be resolved
+			// 2. add the await keyword allow to wait the Promise to be resolved
 			await wait(1000)
 			console.log("preparing ...");
 			await wait(3000)
 			console.log("finished");
 		}
-
 		test()
 
-		// Différentes écritures
+		// DIFFERENTES ECRITURES
 		// declaration
 		async function aaa () {}
 
@@ -40,6 +41,8 @@
 			eee: async () => {}
 		}
 
+
+		// EXERCICE 2
 		function makePizza (topping) {
 			// Promises are made imediatly but do not resolve until they are ready !!!
 			return new Promise((resolve, reject) => {
@@ -61,25 +64,24 @@
 			const pizzaPromise2 =  await makePizza(["plant"]);
 			console.log(pizzaPromise2);
 		}
-
 		createPizza()
 
+		// display the both function at the same time
 		const createPizza2 = async () => {
 			const pizzaPromise1 = makePizza(["onion"]);
 			const pizzaPromise2 = makePizza(["marshmalow"]);
 			const [ onion, marchmalow ] = await Promise.all([pizzaPromise1, pizzaPromise2]);
 			console.log(onion, marchmalow);
 		}
-
 		createPizza2()
 
-		// Refacto
+		// EXERCICE 3 Refacto
 		const btn = document.querySelector("#button");
-
 			const animation = async (event) => {
+				// 1. Change the text to GO immediatly
 		 	 	event.currentTarget.innerText = "GO"
 
-				//  // 2. Make it a circle after 2s
+				// 2. Make it a circle after 2s
 				await	wait(200)
 				btn.style.borderRadius = "50%";
 
@@ -100,8 +102,63 @@
 				// 6. Fade out after 0.5s
 				await wait(500)	
 				btn.style.opacity = 0;
-			 }
+			}
 			btn.addEventListener("click",animation ); 
+
+
+		// EXERCIE 4 : HANDLING ERROR 1 (try/catch)
+		// const go = async () => {
+		// 	try { 
+		// 		const pizza = await makePizza(["pineapple"])
+		// 		console.log(pizza);
+		// 	} catch (error) {
+		// 		console.error(new Error(error))
+		// 	}
+		// };
+		// go()
+
+		// EXERCIE 5 : HANDLING ERROR 2 (catch it at run time)
+		const handleError = (error) => {
+			console.error(new Error(error))
+		};
+
+		// const go2 = async () => {
+		// 	const pizza = await makePizza(['pineapple']).catch(handleError);
+		// 	console.log(pizza);
+		// };
+		// const result2 = go2();
+		// console.log(result2);
+		
+		// // _____________
+		// const go3 = async () => {
+		// 	const pizza = await makePizza(['pineapple'])
+		// 	console.log(pizza);
+		// };
+
+		// go3()
+		// .then(result => {
+		// 	console.log(result)
+		// })
+		// .catch(handleError);
+
+		// // EXERCIE 5 : As a safe function with HOF 
+		// 		// HOF : Higher Order Function (function returning a function)
+		const makeSafe = (fn, theErrorHandle) => {
+			return function () {
+				fn()
+				.then(resp => console.log(resp))
+				.catch(theErrorHandle)
+			}
+		}		
+
+		const go4 = async () => {
+			const pizza = await makePizza(['pineapple']);
+			console.log(pizza);
+		};
+
+		const safeGo = makeSafe(go4, handleError);
+		// this is easiest when we have a lot of function to check ! 
+		safeGo();
 	</script>
 </body>
 </html>
