@@ -23,7 +23,7 @@
 
 			const animation = (event) => {
 		 		event.currentTarget.innerText = "GO"
-				 
+
 			 // 2. Make it a circle after 2s
 				wait(200)
 					.then(() => {
@@ -58,6 +58,10 @@
 					})
 			}
 			btn.addEventListener("click",animation );
+
+			// Quand je renvoie qqch à partir du .then()
+			// --> si value : elle sera appelé dans le prochain .then
+			// --> si Promise : .then() suivant sera appelé que lorsque cette promesse aura été éxécutée. 
     </script>
   </body>
 </html>
