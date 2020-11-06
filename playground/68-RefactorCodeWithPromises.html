@@ -16,52 +16,75 @@
 		
 		<script>
 			// REFACTO 66
-			const btn = document.querySelector("#button");
+			// const btn = document.querySelector("#button");
 			
-			// wait a certain amout of time 
-			const wait = (ms = 0) => new Promise( resolve => setTimeout(resolve, ms));
+			// // wait a certain amout of time 
+			// const wait = (ms = 0) => new Promise( resolve => setTimeout(resolve, ms));
 
-			const animation = (event) => {
-		 		event.currentTarget.innerText = "GO"
+			// const animation = (event) => {
+		 	// 	event.currentTarget.innerText = "GO"
 
-			 // 2. Make it a circle after 2s
-				wait(200)
-					.then(() => {
-						console.log("circle");
-						btn.style.borderRadius = "50%";
-						return wait(500)
-					})
-					// 3. Make it red after 0.5s
-					.then(() =>{
-						console.log("red");
-						btn.style.backgroundColor = "red";
-						btn.style.color = "white";
-						return wait(250)
-					})
-					// 4. Make it square after 0.25s
-					.then(() =>{
-						console.log("square");
-						btn.style.borderRadius = "0%";
-						return wait(300)
-					})
-					// 5. Make it purple after 0.3s
-					.then(() =>{
-						console.log("purple");
-						btn.style.backgroundColor = "#5f81ff";
-						btn.style.color = "white";
-						return wait(500)
-					})
-					// 6. Fade out after 0.5s
-					.then(() =>{
-						console.log("disapear");
-						btn.style.opacity = 0;
-					})
-			}
-			btn.addEventListener("click",animation );
+			//  // 2. Make it a circle after 2s
+			// 	wait(200)
+			// 		.then(() => {
+			// 			console.log("circle");
+			// 			btn.style.borderRadius = "50%";
+			// 			return wait(500)
+			// 		})
+			// 		// 3. Make it red after 0.5s
+			// 		.then(() =>{
+			// 			console.log("red");
+			// 			btn.style.backgroundColor = "red";
+			// 			btn.style.color = "white";
+			// 			return wait(250)
+			// 		})
+			// 		// 4. Make it square after 0.25s
+			// 		.then(() =>{
+			// 			console.log("square");
+			// 			btn.style.borderRadius = "0%";
+			// 			return wait(300)
+			// 		})
+			// 		// 5. Make it purple after 0.3s
+			// 		.then(() =>{
+			// 			console.log("purple");
+			// 			btn.style.backgroundColor = "#5f81ff";
+			// 			btn.style.color = "white";
+			// 			return wait(500)
+			// 		})
+			// 		// 6. Fade out after 0.5s
+			// 		.then(() =>{
+			// 			console.log("disapear");
+			// 			btn.style.opacity = 0;
+			// 		})
+			// }
+			// btn.addEventListener("click",animation );
 
 			// Quand je renvoie qqch à partir du .then()
 			// --> si value : elle sera appelé dans le prochain .then
-			// --> si Promise : .then() suivant sera appelé que lorsque cette promesse aura été éxécutée. 
+			// --> si Promise : .then() suivant sera appelé que lorsque cette promesse aura été éxécutée.
+
+
+			let storyPromise = null;
+
+			function getJSON(url) {
+			  return fetch(url).then((response) => {
+						console.log(response);
+					});
+			}
+
+			const getStory = (i) => {
+				fetch(`https://jsonplaceholder.typicode.com/posts/${i}`)
+				.then(response => {
+					return response.json()
+				})
+				.then(resp => {
+					console.log(resp.title);
+				})
+				.catch(function(error) {
+				  console.log("Failed!", error);
+				})
+			}
+			getStory(3)
     </script>
   </body>
 </html>
