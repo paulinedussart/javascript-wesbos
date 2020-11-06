@@ -8,8 +8,100 @@
 	<link rel="stylesheet" href="../base.css" />
 </head>
 <body style="display: flex; justify-content: center;">
+	<div id="button" style="background-color: darkorange; color: white; font-weight: 600;" class="p-2 btn">Click !</div>
+		
 	<script>
 		console.log("Async Await");
+		const wait = (time = 0) => new Promise(resolve => setTimeout(resolve, time))
+
+		// mark the function as async
+		const test = async () => {
+			console.log("start");
+			// the AWAIT keyword allow to wait the Promise to be resolved
+			await wait(1000)
+			console.log("preparing ...");
+			await wait(3000)
+			console.log("finished");
+		}
+
+		test()
+
+		// Différentes écritures
+		// declaration
+		async function aaa () {}
+
+		// arrow function 
+		const bbb = async () => {}
+
+		// callback
+		const object = {
+			ccc: async function () {}, 
+			async ddd() {},
+			eee: async () => {}
+		}
+
+		function makePizza (topping) {
+			// Promises are made imediatly but do not resolve until they are ready !!!
+			return new Promise((resolve, reject) => {
+				const timeToCook = 5 * (topping.length * 100)
+				setTimeout(()=> {
+				// resolving when it's done
+				resolve(`your 🍕 is ${topping.join(" ")}`)
+				}, timeToCook)
+				// reject if something wrong
+				if (topping.includes("pineapple")){
+					reject(new Error("PineApple present : Must NOT be include"))
+				}
+			});
+		}
+
+		const createPizza = async () => {
+			const pizzaPromise1 = await makePizza(["onion", "marshmalow"]);
+			console.log(pizzaPromise1);
+			const pizzaPromise2 =  await makePizza(["plant"]);
+			console.log(pizzaPromise2);
+		}
+
+		createPizza()
+
+		const createPizza2 = async () => {
+			const pizzaPromise1 = makePizza(["onion"]);
+			const pizzaPromise2 = makePizza(["marshmalow"]);
+			const [ onion, marchmalow ] = await Promise.all([pizzaPromise1, pizzaPromise2]);
+			console.log(onion, marchmalow);
+		}
+
+		createPizza2()
+
+		// Refacto
+		const btn = document.querySelector("#button");
+
+			const animation = async (event) => {
+		 	 	event.currentTarget.innerText = "GO"
+
+				//  // 2. Make it a circle after 2s
+				await	wait(200)
+				btn.style.borderRadius = "50%";
+
+				// 3. Make it red after 0.5s
+				await wait(500)
+				btn.style.backgroundColor = "red";
+				btn.style.color = "white";
+
+				// 4. Make it square after 0.25s
+				await wait(250)
+				btn.style.borderRadius = "0%";
+				
+				// 5. Make it purple after 0.3s
+				await wait(300)
+				btn.style.backgroundColor = "#5f81ff";
+				btn.style.color = "white";
+
+				// 6. Fade out after 0.5s
+				await wait(500)	
+				btn.style.opacity = 0;
+			 }
+			btn.addEventListener("click",animation ); 
 	</script>
 </body>
 </html>
